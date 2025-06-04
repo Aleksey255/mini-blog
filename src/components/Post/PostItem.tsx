@@ -58,7 +58,7 @@ export default function PostItem({ id, title, content }: Post) {
             </CardContent>
           </Link>
         </CardActionArea>
-        <CardActions sx={{ gap: 7 }}>
+        <CardActions sx={{ gap: 7, position: 'relative' }}>
           <Link
             to={`/post/${id}`}
             style={{ color: 'inherit', textDecoration: 'none' }}
@@ -73,11 +73,23 @@ export default function PostItem({ id, title, content }: Post) {
             style={{
               transition: 'background 0.3s',
               cursor: 'pointer',
-              position: 'relative',
             }}
           >
             <EmojiEmotions />
           </IconButton>
+          {showReactions && (
+            <div
+              onMouseLeave={() => setShowReactions(false)}
+              style={{
+                position: 'absolute',
+                bottom: '40px',
+                left: '0',
+                padding: '8px',
+              }}
+            >
+              <ReactionBar id={id} />
+            </div>
+          )}
           <PostModal
             key={post?.id}
             initialData={post}
@@ -97,19 +109,6 @@ export default function PostItem({ id, title, content }: Post) {
             }
           />
         </CardActions>
-        {showReactions && (
-          <div
-            onMouseLeave={() => setShowReactions(false)}
-            style={{
-              position: 'absolute',
-              bottom: '105px',
-              left: '8%',
-              padding: '8px',
-            }}
-          >
-            <ReactionBar id={id} />
-          </div>
-        )}
       </Card>
     </Grid>
   )
